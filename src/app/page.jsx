@@ -31,7 +31,7 @@ export default function Home() {
 
       <main>
         {/* HERO SECTION */}
-        <section className="min-h-[80vh] flex items-center justify-center px-8 py-16 bg-[radial-gradient(circle_at_center_top,rgba(255,87,34,0.1)_0%,var(--surface)_60%)]">
+        <section className="min-h-[80vh] flex items-center justify-center px-8 py-16 bg-[radial-gradient(circle_at_center_top,rgba(34, 108, 255, 0.1)_0%,var(--surface)_60%)]">
           <div className="max-w-[800px] text-center flex flex-col items-center gap-6">
             <h1 className="text-[clamp(3rem,6vw,5rem)] font-extrabold leading-[1.1] tracking-[-0.03em]">
               Fire Broker <br />

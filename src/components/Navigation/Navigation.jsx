@@ -77,7 +77,7 @@ function Sidebar({ children }) {
         lg:flex 
         w-full lg:w-64 
         bg-[var(--surface-container-low)] 
-        border-b lg:border-b-0 lg:border-r border-[rgba(90,65,56,0.1)] 
+        border-b lg:border-b-0 lg:border-r border-[rgba(34, 115, 255, 0.2)] 
         flex-col overflow-y-auto
       `}>
         {children}
@@ -118,7 +118,7 @@ function Menu({ children, orientation = 'horizontal' }) {
         {children}
       </ul>
       {isMobileOpen && (
-        <div className="absolute top-full left-0 w-full bg-[var(--surface-container-low)] border-b border-[rgba(90,65,56,0.1)] shadow-lg md:hidden">
+        <div className="absolute top-full left-0 w-full bg-[var(--surface-container-low)] border-b border-[rgba(34, 115, 255, 0.2)] shadow-lg md:hidden">
           <ul className="flex flex-col gap-2 p-4 list-none m-0">
             {children}
           </ul>
@@ -142,7 +142,7 @@ function Item({ id, href, icon, children }) {
         onClick={() => setIsMobileOpen?.(false)}
         className={`flex items-center gap-2 px-4 py-2 rounded-md text-[0.875rem] font-medium transition-all duration-150 ${isActive
           ? 'bg-[var(--primary)] text-white'
-          : 'text-[var(--on-surface-variant)] hover:bg-[rgba(255,87,34,0.1)]'
+          : 'text-[var(--on-surface-variant)] hover:bg-[rgba(34, 115, 255, 0.2)]'
           }`}
       >
         {icon && <span>{icon}</span>}
@@ -163,13 +163,13 @@ function Action({
   ...props
 }) {
   const baseClasses =
-    'inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md font-semibold text-[0.875rem] transition-all duration-150 font-[\'Inter\',sans-serif] drop-shadow-[0_2px_10px_rgba(255,87,34,0.3)]';
+    'inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md font-semibold text-[0.875rem] transition-all duration-150 font-[\'Inter\',sans-serif] drop-shadow-[0_2px_10px_rgba(34,87,255,0.3)]';
 
   const variants = {
     filled:
       'bg-gradient-to-br from-[var(--primary)] to-[var(--primary)/0.6] text-[var(--on-primary)] hover:shadow-lg hover:-translate-y-[2px]',
     ghost:
-      'bg-transparent border border-[rgba(90,65,56,0.2)] text-[var(--on-surface)] hover:bg-[rgba(255,87,34,0.1)]',
+      'bg-transparent border border-[rgba(34, 115, 255, 0.2)] text-[var(--on-surface)] hover:bg-[rgba(34, 115, 255, 0.2)]',
   };
 
   return (

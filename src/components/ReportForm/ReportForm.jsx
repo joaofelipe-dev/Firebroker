@@ -77,7 +77,7 @@ function Provider({ children }) {
 function Frame({ children }) {
   const { submit } = useReportForm();
   return (
-    <form className="flex flex-col gap-6 max-w-[640px] w-full" onSubmit={submit}>
+    <form className="flex flex-col gap-6 max-w-[640px] w-full mx-auto" onSubmit={submit}>
       {children}
     </form>
   );

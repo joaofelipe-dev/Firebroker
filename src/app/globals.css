@@ -4,29 +4,29 @@
    Material Design 3 Color System
    ────────────────────────────────────────────── */
 :root {
-  --primary: #ff5722;
+  --primary: #1976d2;
   --on-primary: #ffffff;
-  --primary-container: #ffdbce;
-  --on-primary-container: #3e0a00;
+  --primary-container: #d2e4ff;
+  --on-primary-container: #001c3a;
 
-  --secondary: #88d982;
+  --secondary: #4caf50;
   --on-secondary: #ffffff;
-  --secondary-container: #b0f6b0;
-  --on-secondary-container: #004300;
+  --secondary-container: #d6f5d6;
+  --on-secondary-container: #002204;
 
-  --tertiary: #ffc069;
-  --on-tertiary: #ffffff;
-  --tertiary-container: #ffe9b1;
+  --tertiary: #ffb74d;
+  --on-tertiary: #3e2900;
+  --tertiary-container: #ffe0b2;
   --on-tertiary-container: #3e2900;
 
-  --error: #f32424;
+  --error: #d32f2f;
   --on-error: #ffffff;
   --error-container: #f9dedc;
   --on-error-container: #410e0b;
 
-  --surface: #fffbfe;
+  --surface: #ffffff;
   --on-surface: #1c1b1f;
-  --surface-variant: #49454e;
+  --surface-variant: #e7e0ec;
   --on-surface-variant: #49454e;
 
   --surface-container-lowest: #ffffff;
@@ -38,15 +38,6 @@
   --outline: #79747e;
   --outline-variant: #cac4d0;
 
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-
   --radius-xs: 0.25rem;
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -54,11 +45,15 @@
   --radius-full: 9999px;
 }
 
-/* Dark mode (optional) */
+/* 🌙 Dark mode mais completo */
 @media (prefers-color-scheme: dark) {
   :root {
-    --surface: #1c1b1f;
+    --primary: #90caf9;
+    --on-primary: #003258;
+
+    --surface: #121212;
     --on-surface: #e6e0e9;
+
     --surface-variant: #49454e;
     --on-surface-variant: #cac4d0;
 
@@ -77,34 +72,46 @@
    Global Styles
    ────────────────────────────────────────────── */
 body {
-  @apply bg-[var(--surface)] text-[var(--on-surface)] font-['Inter',sans-serif];
+  @apply bg-[var(--surface)] text-[var(--on-surface)] font-sans;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  @apply font-['Manrope',sans-serif];
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-semibold;
 }
 
 /* ──────────────────────────────────────────────
    Utility Classes
    ────────────────────────────────────────────── */
-.gradient-fire-text {
+.gradient-primary-text {
   @apply bg-gradient-to-br from-[var(--primary)] to-[var(--tertiary)] bg-clip-text text-transparent;
 }
 
-/* Custom animation for pulse glow */
+/* Glow animation */
 @keyframes pulse-glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 /* Smooth transitions */
 @layer components {
   .transition-smooth {
-    @apply transition-all duration-150;
+    @apply transition-all duration-200 ease-in-out;
   }
 }
 
@@ -113,51 +120,49 @@ h1, h2, h3, h4, h5, h6 {
    ────────────────────────────────────────────── */
 .leaflet-control-zoom {
   border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  border-radius: 8px !important;
+  border-radius: var(--radius-md) !important;
   background: var(--surface-container) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 .leaflet-control-zoom a {
   background-color: var(--surface-container) !important;
   color: var(--on-surface) !important;
-  border: 1px solid rgba(90, 65, 56, 0.1) !important;
+  border: 1px solid var(--outline-variant) !important;
   font-size: 18px !important;
   width: 40px !important;
   height: 40px !important;
   line-height: 40px !important;
-  transition: all 150ms var(--tw-transition-timing-function);
+  transition: all 150ms ease;
 }
 
 .leaflet-control-zoom a:hover {
-  background-color: rgba(255, 87, 34, 0.1) !important;
+  background-color: var(--primary-container) !important;
   color: var(--primary) !important;
 }
 
 .leaflet-control-attribution {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
   font-size: 11px !important;
   padding: 2px 6px !important;
   border-radius: 4px !important;
 }
 
+/* Popup */
 .leaflet-popup-content-wrapper {
   background-color: var(--surface-container) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-  border: none !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
   color: var(--on-surface) !important;
 }
 
 .leaflet-popup-tip {
   background-color: var(--surface-container) !important;
-  border: none !important;
 }
 
 .leaflet-popup-content {
   margin: 0 !important;
   min-width: 180px !important;
-  color: var(--on-surface) !important;
   font-family: 'Inter', sans-serif;
 }
 
@@ -165,14 +170,18 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--on-surface-variant);
 }
 
+/* Marker animation */
 .map-marker {
-  animation: mapMarkerPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+  animation: mapMarkerPulse 2s ease-in-out infinite;
 }
 
 @keyframes mapMarkerPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.8;
   }
