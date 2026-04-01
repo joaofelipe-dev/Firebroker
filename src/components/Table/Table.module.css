@@ -1,0 +1,76 @@
+.wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(90, 65, 56, 0.12);
+  background: var(--surface-container);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+}
+
+.head {
+  border-bottom: 1px solid rgba(90, 65, 56, 0.12);
+  background: var(--surface-container-low);
+}
+
+.headCell {
+  padding: var(--space-4) var(--space-5);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--on-surface-variant);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.body {
+  /* ... */
+}
+
+.row {
+  border-bottom: 1px solid rgba(90, 65, 56, 0.08);
+  transition: background var(--transition-fast);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowClickable {
+  cursor: pointer;
+}
+
+.rowClickable:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.rowSelected {
+  background: rgba(255, 87, 34, 0.06);
+}
+
+.cell {
+  padding: var(--space-4) var(--space-5);
+  font-size: 0.875rem;
+  color: var(--on-surface);
+  white-space: nowrap;
+}
+
+.cellMuted {
+  color: var(--on-surface-variant);
+}
+
+.align-left { text-align: left; }
+.align-center { text-align: center; }
+.align-right { text-align: right; }
+
+.empty {
+  padding: var(--space-12) var(--space-5);
+  text-align: center;
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  font-style: italic;
+}
