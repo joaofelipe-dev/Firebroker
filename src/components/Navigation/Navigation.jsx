@@ -92,8 +92,7 @@ function Sidebar({ children }) {
 function Brand() {
   return (
     <Link href="/" className="flex items-center gap-2 font-['Manrope',sans-serif] font-bold text-[1.25rem] text-[var(--primary)] hover:opacity-80 transition-opacity">
-      <span className="text-[1.5rem]">🔥</span>
-      <span>FireBroker</span>
+      <img src="/logo.png" alt="Logo" width={150} height={150} />
     </Link>
   );
 }
@@ -167,7 +166,7 @@ function Action({
 
   const variants = {
     filled:
-      'bg-gradient-to-br from-[var(--primary)] to-[var(--primary)/0.6] text-[var(--on-primary)] hover:shadow-lg hover:-translate-y-[2px]',
+      'bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)]/40 text-[var(--on-primary)] hover:shadow-lg hover:-translate-y-[2px]',
     ghost:
       'bg-transparent border border-[rgba(34, 115, 255, 0.2)] text-[var(--on-surface)] hover:bg-[rgba(34, 115, 255, 0.2)]',
   };
