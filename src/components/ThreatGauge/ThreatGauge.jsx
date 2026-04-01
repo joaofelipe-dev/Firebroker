@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, use } from 'react';
-import styles from './ThreatGauge.module.css';
 
 /* ──────────────────────────────────────────────
    Context
@@ -24,7 +23,7 @@ function Root({ children, level = 'moderate', onChange }) {
 
   return (
     <ThreatGaugeContext value={{ level, levelIndex, currentLevel, levels: LEVELS, onChange }}>
-      <div className={styles.root}>{children}</div>
+      <div className="flex flex-col gap-3">{children}</div>
     </ThreatGaugeContext>
   );
 }
@@ -36,12 +35,12 @@ function Bar({ interactive = false }) {
   const { levelIndex, levels, onChange } = use(ThreatGaugeContext);
 
   return (
-    <div className={styles.bar}>
+    <div className="grid grid-cols-4 gap-1">
       {levels.map((l, i) => (
         <button
           key={l.id}
           type="button"
-          className={`${styles.segment} ${i <= levelIndex ? styles.segmentActive : ''} ${interactive ? styles.segmentInteractive : ''}`}
+          className={`h-[6px] rounded-full bg-[var(--surface-container-highest)] border-none cursor-default transition-all duration-250 ${interactive ? "cursor-pointer h-[8px] hover:opacity-85 hover:scale-y-125" : ""}`}
           style={i <= levelIndex ? { background: l.color, boxShadow: `0 0 8px ${l.color}40` } : {}}
           onClick={interactive ? () => onChange?.(l.id) : undefined}
           aria-label={`Nível ${l.label}`}
@@ -58,9 +57,9 @@ function Bar({ interactive = false }) {
 function Label() {
   const { currentLevel } = use(ThreatGaugeContext);
   return (
-    <div className={styles.label} style={{ color: currentLevel.color }}>
-      <span className={styles.labelDot} style={{ background: currentLevel.color }} />
-      <span className={styles.labelText}>{currentLevel.label}</span>
+    <div className="flex items-center gap-2" style={{ color: currentLevel.color }}>
+      <span className="w-2 h-2 rounded-full shrink-0 animate-pulse-glow" style={{ background: currentLevel.color }} />
+      <span className="font-['Inter',sans-serif] text-[0.8125rem] font-[600] tracking-[0.04em] uppercase">{currentLevel.label}</span>
     </div>
   );
 }
@@ -70,12 +69,12 @@ function Label() {
    ────────────────────────────────────────────── */
 function Selector({ value, onChange }) {
   return (
-    <div className={styles.selector}>
+    <div className="grid grid-cols-4 gap-2">
       {LEVELS.map((l) => (
         <button
           key={l.id}
           type="button"
-          className={`${styles.selectorBtn} ${value === l.id ? styles.selectorBtnActive : ''}`}
+          className="p-[0.5rem_0.75rem] flex flex-1 justify-center items-center rounded-md text-[0.8125rem] font-[500] font-['Inter',sans-serif] border border-[rgba(90,65,56,0.2)] text-[var(--on-surface-variant)] bg-[var(--surface-container)] cursor-pointer transition-all duration-150 text-center hover:bg-[var(--surface-container-high)]"
           style={value === l.id ? { borderColor: l.color, color: l.color, background: `${l.color}12` } : {}}
           onClick={() => onChange?.(l.id)}
         >

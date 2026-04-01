@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "FireBroker | The Sentinel — Protegendo o que Importa",
+  title: "FireBroker | Protegendo o que Importa",
   description:
     "Sistema inteligente de monitoramento e denúncia de incêndios florestais. Transformando olhos atentos em ações decisivas.",
 };

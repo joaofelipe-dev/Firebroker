@@ -1,212 +1,179 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
 
 /* ──────────────────────────────────────────────
-   DESIGN TOKENS — The Sentinel Aesthetic
+   Material Design 3 Color System
    ────────────────────────────────────────────── */
 :root {
-  /* Surfaces */
-  --surface: #121412;
-  --surface-dim: #121412;
-  --surface-bright: #383a37;
-  --surface-container-lowest: #0d0f0d;
-  --surface-container-low: #1a1c1a;
-  --surface-container: #1e201e;
-  --surface-container-high: #292a28;
-  --surface-container-highest: #333533;
-  --surface-variant: #333533;
+  --primary: #ff5722;
+  --on-primary: #ffffff;
+  --primary-container: #ffdbce;
+  --on-primary-container: #3e0a00;
 
-  /* Primary — Fire / High Alert */
-  --primary: #ffb5a0;
-  --primary-container: #ff5722;
-  --on-primary: #5f1500;
-  --on-primary-container: #541100;
-  --primary-fixed: #ffdbd1;
-
-  /* Secondary — Forest Health / Success */
   --secondary: #88d982;
-  --secondary-container: #005b14;
-  --on-secondary: #003909;
+  --on-secondary: #ffffff;
+  --secondary-container: #b0f6b0;
+  --on-secondary-container: #004300;
 
-  /* Tertiary — Warning */
-  --tertiary: #ffb865;
-  --tertiary-container: #cc7f00;
-  --on-tertiary: #482a00;
+  --tertiary: #ffc069;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #ffe9b1;
+  --on-tertiary-container: #3e2900;
 
-  /* On-surface */
-  --on-surface: #e2e3df;
-  --on-surface-variant: #e3bfb2;
+  --error: #f32424;
+  --on-error: #ffffff;
+  --error-container: #f9dedc;
+  --on-error-container: #410e0b;
 
-  /* Outline */
-  --outline: #aa8a7e;
-  --outline-variant: #5a4138;
+  --surface: #fffbfe;
+  --on-surface: #1c1b1f;
+  --surface-variant: #49454e;
+  --on-surface-variant: #49454e;
 
-  /* Error */
-  --error: #ffb4ab;
-  --error-container: #93000a;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f7f2f7;
+  --surface-container: #f3eef3;
+  --surface-container-high: #ede7f6;
+  --surface-container-highest: #e6e0eb;
 
-  /* Typography */
-  --font-headline: 'Manrope', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --outline: #79747e;
+  --outline-variant: #cac4d0;
 
-  /* Spacing */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
-  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-  --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
-  --space-20: 5rem;
 
-  /* Radius */
+  --radius-xs: 0.25rem;
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
+  --radius-lg: 1.25rem;
   --radius-full: 9999px;
+}
 
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-base: 250ms ease;
-  --transition-slow: 400ms ease;
+/* Dark mode (optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #1c1b1f;
+    --on-surface: #e6e0e9;
+    --surface-variant: #49454e;
+    --on-surface-variant: #cac4d0;
+
+    --surface-container-lowest: #0f0d13;
+    --surface-container-low: #1d1b20;
+    --surface-container: #211f26;
+    --surface-container-high: #2b2930;
+    --surface-container-highest: #36343b;
+
+    --outline: #938f99;
+    --outline-variant: #49454e;
+  }
 }
 
 /* ──────────────────────────────────────────────
-   RESET & BASE
+   Global Styles
    ────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 body {
-  background-color: var(--surface);
-  color: var(--on-surface);
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  min-height: 100dvh;
+  @apply bg-[var(--surface)] text-[var(--on-surface)] font-['Inter',sans-serif];
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-headline);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--on-surface);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font-family: var(--font-body);
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-input, textarea, select {
-  font-family: var(--font-body);
-}
-
-img, svg {
-  display: block;
-  max-width: 100%;
-}
-
-ul, ol {
-  list-style: none;
+  @apply font-['Manrope',sans-serif];
 }
 
 /* ──────────────────────────────────────────────
-   UTILITY CLASSES
+   Utility Classes
    ────────────────────────────────────────────── */
-
-/* Gradient CTA background */
-.gradient-fire {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
-}
-
 .gradient-fire-text {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  @apply bg-gradient-to-br from-[var(--primary)] to-[var(--tertiary)] bg-clip-text text-transparent;
 }
 
-/* Glassmorphism */
-.glass {
-  background: rgba(18, 20, 18, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--surface-container-low);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--surface-container-highest);
-  border-radius: var(--radius-full);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--outline);
-}
-
-/* ──────────────────────────────────────────────
-   ANIMATIONS
-   ────────────────────────────────────────────── */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Custom animation for pulse glow */
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255, 87, 34, 0);
-  }
-  50% {
-    box-shadow: 0 0 20px 4px rgba(255, 87, 34, 0.3);
-  }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease forwards;
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth transitions */
+@layer components {
+  .transition-smooth {
+    @apply transition-all duration-150;
+  }
+}
+
+/* ──────────────────────────────────────────────
+   Leaflet Map Customization
+   ────────────────────────────────────────────── */
+.leaflet-control-zoom {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 8px !important;
+  background: var(--surface-container) !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: var(--surface-container) !important;
+  color: var(--on-surface) !important;
+  border: 1px solid rgba(90, 65, 56, 0.1) !important;
+  font-size: 18px !important;
+  width: 40px !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  transition: all 150ms var(--tw-transition-timing-function);
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: rgba(255, 87, 34, 0.1) !important;
+  color: var(--primary) !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.95) !important;
+  font-size: 11px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: var(--surface-container) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  border: none !important;
+  color: var(--on-surface) !important;
+}
+
+.leaflet-popup-tip {
+  background-color: var(--surface-container) !important;
+  border: none !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  min-width: 180px !important;
+  color: var(--on-surface) !important;
+  font-family: 'Inter', sans-serif;
+}
+
+.leaflet-popup-content small {
+  color: var(--on-surface-variant);
+}
+
+.map-marker {
+  animation: mapMarkerPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+@keyframes mapMarkerPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }

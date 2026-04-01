@@ -1,10 +1,21 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
+import dynamic from 'next/dynamic';
 import { Card } from "@/components/Card";
 import { ThreatGauge } from "@/components/ThreatGauge";
 import { Navigation } from "@/components/Navigation";
-import styles from "../../Admin.module.css";
+
+const DynamicMap = dynamic(() => import("@/components/Map").then(mod => ({ default: mod.Map })), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[300px] w-full flex items-center justify-center bg-[var(--surface-container-low)]">
+      <div className="text-center">
+        <p className="text-[var(--on-surface-variant)] text-[0.875rem]">Carregando mapa orbital...</p>
+      </div>
+    </div>
+  ),
+});
 
 export default function ReportDetailsPage() {
   const params = useParams();
@@ -25,123 +36,58 @@ export default function ReportDetailsPage() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--space-6)",
-      }}
-    >
+    <div className="flex flex-col gap-6">
       {/* Header / Back Action */}
       <div>
         <button
           onClick={() => router.push("/admin")}
-          style={{
-            background: "transparent",
-            border: "none",
-            color: "var(--primary)",
-            cursor: "pointer",
-            fontFamily: "var(--font-body)",
-            fontWeight: 600,
-            padding: "var(--space-2) 0",
-            marginBottom: "var(--space-2)",
-          }}
+          className="bg-transparent border-none text-[var(--primary)] cursor-pointer font-['Inter',sans-serif] font-semibold py-2 mb-2 hover:underline"
         >
           ⬅ Voltar para Dashboard
         </button>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h1 style={{ fontSize: "2rem", fontWeight: 800, margin: 0 }}>
+        <div className="flex justify-between items-center">
+          <h1 className="text-[2rem] font-extrabold m-0 font-['Manrope',sans-serif] tracking-[-0.02em]">
             Relatório #{report.id}
           </h1>
           <Card.Badge variant="warning">{report.status}</Card.Badge>
         </div>
-        <p style={{ color: "var(--on-surface-variant)" }}>
+        <p className="text-[var(--on-surface-variant)] text-[0.875rem] opacity-80 mt-1">
           Registrado por {report.reporterId} • {report.time}
         </p>
       </div>
 
-      <div className={styles.detailsGrid}>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         {/* Main Details */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-6)",
-          }}
-        >
+        <div className="flex flex-col gap-6">
           <Card.Root>
             <Card.Header>
               <Card.Title>Informações do Incidente</Card.Title>
             </Card.Header>
             <Card.Body>
-              <div style={{ display: "grid", gap: "var(--space-4)" }}>
+              <div className="grid gap-4">
                 <div>
-                  <div
-                    style={{
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
-                      color: "var(--on-surface-variant)",
-                      textTransform: "uppercase",
-                    }}
-                  >
+                  <div className="text-[0.75rem] font-semibold text-[var(--on-surface-variant)] uppercase tracking-[0.05em]">
                     Descrição da Situação
                   </div>
-                  <p style={{ lineHeight: 1.6, marginTop: "var(--space-2)" }}>
+                  <p className="leading-[1.6] mt-2 text-[0.9375rem]">
                     {report.description}
                   </p>
                 </div>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "var(--space-4)",
-                    background: "var(--surface-container-low)",
-                    padding: "var(--space-4)",
-                    borderRadius: "var(--radius-md)",
-                  }}
-                >
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 bg-[var(--surface-container-low)] p-4 rounded-md">
                   <div>
-                    <div
-                      style={{
-                        fontSize: "0.75rem",
-                        fontWeight: 600,
-                        color: "var(--on-surface-variant)",
-                        textTransform: "uppercase",
-                      }}
-                    >
+                    <div className="text-[0.75rem] font-semibold text-[var(--on-surface-variant)] uppercase tracking-[0.05em]">
                       Tipo
                     </div>
-                    <div
-                      style={{ marginTop: "var(--space-2)", fontWeight: 500 }}
-                    >
+                    <div className="mt-2 font-medium text-[0.9375rem]">
                       {report.type}
                     </div>
                   </div>
                   <div>
-                    <div
-                      style={{
-                        fontSize: "0.75rem",
-                        fontWeight: 600,
-                        color: "var(--on-surface-variant)",
-                        textTransform: "uppercase",
-                      }}
-                    >
+                    <div className="text-[0.75rem] font-semibold text-[var(--on-surface-variant)] uppercase tracking-[0.05em]">
                       Coordenadas
                     </div>
-                    <div
-                      style={{
-                        marginTop: "var(--space-2)",
-                        fontWeight: 500,
-                        fontFamily: "Courier New, monospace",
-                      }}
-                    >
+                    <div className="mt-2 font-medium text-[0.9375rem] font-['Courier_New',monospace]">
                       {report.location}
                     </div>
                   </div>
@@ -152,25 +98,11 @@ export default function ReportDetailsPage() {
 
           {/* Map Placeholder */}
           <Card.Root>
-            <div
-              style={{
-                height: 300,
-                background: "var(--surface-container-high)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "var(--on-surface-variant)",
-              }}
-            >
-              [ Integração com Mapa Orbital Sentinel ]
+            <div className="h-[300px] bg-[var(--surface-container-high)] flex items-center justify-center text-[var(--on-surface-variant)] text-[0.875rem] overflow-hidden rounded-t-xl">
+              <DynamicMap height="300px" />
             </div>
             <Card.Footer>
-              <span
-                style={{
-                  fontSize: "0.875rem",
-                  color: "var(--on-surface-variant)",
-                }}
-              >
+              <span className="text-[0.875rem] text-[var(--on-surface-variant)]">
                 Dados cruzados com satélites do INPE em tempo real.
               </span>
             </Card.Footer>
@@ -178,13 +110,7 @@ export default function ReportDetailsPage() {
         </div>
 
         {/* Action Panel / Sidebar */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-6)",
-          }}
-        >
+        <div className="flex flex-col gap-6">
           <Card.Root>
             <Card.Header>
               <Card.Title>Análise de Risco</Card.Title>
@@ -192,48 +118,33 @@ export default function ReportDetailsPage() {
             <Card.Body>
               <ThreatGauge.Root level={report.severity}>
                 <ThreatGauge.Label />
-                <div style={{ height: "var(--space-4)" }} />
+                <div className="h-4" />
                 <ThreatGauge.Bar />
               </ThreatGauge.Root>
             </Card.Body>
           </Card.Root>
 
-          <Card.Root outline>
+          <Card.Root outline="true">
             <Card.Header>
               <Card.Title>Ações Operacionais</Card.Title>
             </Card.Header>
             <Card.Body>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "var(--space-3)",
-                }}
-              >
+              <div className="flex flex-col gap-3">
                 <Navigation.Action
                   href="#"
-                  style={{ width: "100%", justifyContent: "center" }}
+                  className="w-full justify-center"
                 >
                   Despachar Equipe
                 </Navigation.Action>
                 <Navigation.Action
                   href="#"
                   variant="ghost"
-                  style={{ width: "100%", justifyContent: "center" }}
+                  className="w-full justify-center"
                 >
                   Aviso Cívil (Sirene)
                 </Navigation.Action>
                 <button
-                  style={{
-                    background: "transparent",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "var(--on-surface)",
-                    padding: "var(--space-3)",
-                    borderRadius: "var(--radius-md)",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    fontFamily: "var(--font-body)",
-                  }}
+                  className="bg-transparent border border-[rgba(255,255,255,0.1)] text-[var(--on-surface)] p-3 rounded-md font-semibold cursor-pointer font-['Inter',sans-serif] text-[0.875rem] transition-colors hover:bg-[var(--surface-container-high)]"
                 >
                   Baixar Risco para Moderado
                 </button>

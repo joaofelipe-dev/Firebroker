@@ -14,47 +14,34 @@ export default function ReportPage() {
         <Navigation.Bar>
           <Navigation.Brand />
           <Navigation.Menu>
-            <Navigation.Item id="home" href="/" icon="🏠">
+            <Navigation.Item id="home" href="/">
               Início
             </Navigation.Item>
-            <Navigation.Item id="report" href="/report" icon="🔥">
-              Reportar Foco
+            <Navigation.Item id="map" href="/map">
+              Mapa
+            </Navigation.Item>
+            <Navigation.Item id="how-it-works" href="/how-it-works">
+              Como Funciona
+            </Navigation.Item>
+            <Navigation.Item id="report" href="/report">
+              Denunciar
+            </Navigation.Item>
+            <Navigation.Item id="admin" href="/admin">
+              Admin
             </Navigation.Item>
           </Navigation.Menu>
-          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-            <Navigation.Action href="/admin" variant="ghost">
-              ⚙️ Admin
-            </Navigation.Action>
-          </div>
         </Navigation.Bar>
       </Navigation.Provider>
 
-      <main
-        style={{
-          minHeight: "80vh",
-          padding: "var(--space-12) var(--space-8)",
-          background: "var(--surface)",
-        }}
-      >
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <div style={{ marginBottom: "var(--space-8)", textAlign: "center" }}>
+      <main className="min-h-[80vh] py-12 px-8 bg-[var(--surface)]">
+        <div className="max-w-[800px] mx-auto">
+          <div className="mb-8 text-center">
             <Card.Badge variant="warning">Prioridade Alta</Card.Badge>
-            <h1
-              style={{
-                fontSize: "2.5rem",
-                fontWeight: 800,
-                margin: "var(--space-4) 0",
-              }}
-            >
+            <h1 className="text-[2.5rem] font-extrabold my-4">
               Registrar Foco de Incêndio
             </h1>
-            <p
-              style={{
-                color: "var(--on-surface-variant)",
-                fontSize: "1.125rem",
-              }}
-            >
-              Forneça detalhes precisos. A equipe Sentinel usará essas
+            <p className="text-[var(--on-surface-variant)] text-[1.125rem]">
+              Forneça detalhes precisos. A equipe FireBrokers usará essas
               informações para despachar unidades de contenção.
             </p>
           </div>
@@ -64,13 +51,7 @@ export default function ReportPage() {
               <ReportForm.Provider>
                 <ReportForm.StateGate>
                   <ReportForm.Frame>
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                        gap: "var(--space-4)",
-                      }}
-                    >
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
                       <ReportForm.Select
                         label="Tipo de Incidente"
                         fieldName="incidentType"
@@ -100,14 +81,7 @@ export default function ReportPage() {
 
                     <ReportForm.Upload />
 
-                    <div
-                      style={{
-                        marginTop: "var(--space-4)",
-                        padding: "var(--space-4)",
-                        background: "var(--surface-container-highest)",
-                        borderRadius: "var(--radius-md)",
-                      }}
-                    >
+                    <div className="mt-4 p-4 bg-[var(--surface-container-highest)] rounded-md">
                       <ReportForm.Toggle
                         fieldName="anonymous"
                         label="Ocultar minha identidade publicamente (modo Anônimo Ativado)"

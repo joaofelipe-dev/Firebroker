@@ -2,7 +2,7 @@
 
 import { createContext, use, useReducer, useRef } from 'react';
 import { ThreatGauge } from '../ThreatGauge';
-import styles from './ReportForm.module.css';
+import { Check } from 'lucide-react';
 
 /* ──────────────────────────────────────────────
    State & Reducer (lifted into Provider)
@@ -77,7 +77,7 @@ function Provider({ children }) {
 function Frame({ children }) {
   const { submit } = useReportForm();
   return (
-    <form className={styles.frame} onSubmit={submit}>
+    <form className="flex flex-col gap-6 max-w-[640px] w-full" onSubmit={submit}>
       {children}
     </form>
   );
@@ -95,17 +95,17 @@ function Field({ label, fieldName, type = 'text', placeholder, required = false,
     onChange: (e) => setField(fieldName, e.target.value),
     placeholder,
     required,
-    className: styles.fieldInput,
+    className: "bg-[var(--surface-container-highest)] border border-transparent p-[0.75rem_1rem] rounded-md text-[var(--on-surface)] text-[0.875rem] transition-all duration-150 outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] placeholder:text-[var(--on-surface-variant)] placeholder:opacity-50",
   };
 
   return (
-    <div className={styles.field}>
-      <label htmlFor={`field-${fieldName}`} className={styles.fieldLabel}>
+    <div className="flex flex-col gap-2">
+      <label htmlFor={`field-${fieldName}`} className="font-['Inter',sans-serif] text-[0.875rem] font-medium text-[var(--on-surface)]">
         {label}
-        {required && <span className={styles.required}> *</span>}
+        {required && <span className="text-[var(--primary)] font-bold"> *</span>}
       </label>
       {as === 'textarea' ? (
-        <textarea {...sharedProps} rows={4} className={`${styles.fieldInput} ${styles.fieldTextarea}`} />
+        <textarea {...sharedProps} rows={4} className={`${sharedProps.className} resize-y min-h-[100px]`} />
       ) : as === 'select' ? null : (
         <input {...sharedProps} type={type} />
       )}
@@ -119,17 +119,17 @@ function Field({ label, fieldName, type = 'text', placeholder, required = false,
 function Select({ label, fieldName, options = [], required = false }) {
   const { state, setField } = useReportForm();
   return (
-    <div className={styles.field}>
-      <label htmlFor={`field-${fieldName}`} className={styles.fieldLabel}>
+    <div className="flex flex-col gap-2">
+      <label htmlFor={`field-${fieldName}`} className="font-['Inter',sans-serif] text-[0.875rem] font-medium text-[var(--on-surface)]">
         {label}
-        {required && <span className={styles.required}> *</span>}
+        {required && <span className="text-[var(--primary)] font-bold"> *</span>}
       </label>
       <select
         id={`field-${fieldName}`}
         value={state[fieldName] ?? ''}
         onChange={(e) => setField(fieldName, e.target.value)}
         required={required}
-        className={`${styles.fieldInput} ${styles.fieldSelect}`}
+        className="bg-[var(--surface-container-highest)] border border-transparent p-[0.75rem_1rem] rounded-md text-[var(--on-surface)] text-[0.875rem] transition-all duration-150 outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] appearance-none bg-no-repeat bg-[position:right_1rem_top_50%] bg-[size:0.65em_auto] bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23e2e3df%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')]"
       >
         <option value="">Selecione...</option>
         {options.map((opt) => (
@@ -158,10 +158,10 @@ function Upload() {
   }
 
   return (
-    <div className={styles.field}>
-      <label className={styles.fieldLabel}>Evidência Visual</label>
+    <div className="flex flex-col gap-2">
+      <label className="font-['Inter',sans-serif] text-[0.875rem] font-medium text-[var(--on-surface)]">Evidência Visual</label>
       <div
-        className={styles.upload}
+        className="border-2 border-dashed border-[rgba(90,65,56,0.4)] rounded-2xl p-8 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all duration-150 bg-[var(--surface-container-low)] hover:bg-[var(--surface-container)] hover:border-[var(--outline)]"
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         onClick={() => inputRef.current?.click()}
@@ -174,23 +174,23 @@ function Upload() {
           type="file"
           accept="image/*"
           multiple
-          className={styles.uploadInput}
+          className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
         />
         {state.images.length > 0 ? (
-          <div className={styles.uploadPreviews}>
+          <div className="flex flex-wrap gap-4 w-full">
             {state.images.map((src, i) => (
-              <img key={i} src={src} alt={`preview ${i + 1}`} className={styles.uploadPreview} />
+              <img key={i} src={src} alt={`preview ${i + 1}`} className="w-20 h-20 object-cover rounded-md border border-[var(--outline-variant)]" />
             ))}
-            <div className={styles.uploadPlaceholder}>
+            <div className="w-20 h-20 flex items-center justify-center rounded-md border border-dashed border-[var(--outline-variant)] bg-[var(--surface-container-highest)] text-[var(--on-surface-variant)] text-[0.75rem]">
               <span>+ Adicionar</span>
             </div>
           </div>
         ) : (
-          <div className={styles.uploadEmpty}>
-            <span className={styles.uploadIcon}>📸</span>
-            <span className={styles.uploadText}>Arraste imagens ou clique para selecionar</span>
-            <span className={styles.uploadHint}>JPG ou RAW de alta resolução recomendado</span>
+          <div className="flex flex-col items-center justify-center">
+            <span className="text-[2rem] mb-2">📸</span>
+            <span className="font-medium text-[var(--on-surface)]">Arraste imagens ou clique para selecionar</span>
+            <span className="text-[0.75rem] text-[var(--on-surface-variant)]">JPG ou RAW de alta resolução recomendado</span>
           </div>
         )}
       </div>
@@ -212,23 +212,23 @@ function Location() {
   }
 
   return (
-    <div className={styles.field}>
-      <div className={styles.fieldLabelRow}>
-        <label className={styles.fieldLabel}>Dados Geoespaciais</label>
-        <button type="button" className={styles.locationBtn} onClick={getLocation}>
+    <div className="flex flex-col gap-2">
+      <div className="flex justify-between items-center">
+        <label className="font-['Inter',sans-serif] text-[0.875rem] font-medium text-[var(--on-surface)]">Dados Geoespaciais</label>
+        <button type="button" className="text-[0.75rem] text-[var(--primary)] bg-[rgba(255,87,34,0.1)] border border-[rgba(255,87,34,0.2)] p-[0.25rem_0.75rem] rounded-full font-semibold hover:bg-[rgba(255,87,34,0.2)]" onClick={getLocation}>
           📍 Usar minha localização
         </button>
       </div>
-      <div className={styles.locationGrid}>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <input
-          className={styles.fieldInput}
+          className="bg-[var(--surface-container-highest)] border border-transparent p-[0.75rem_1rem] rounded-md text-[var(--on-surface)] text-[0.875rem] transition-all duration-150 outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] placeholder:text-[var(--on-surface-variant)] placeholder:opacity-50"
           type="text"
           placeholder="Latitude (ex: -23.5505)"
           value={state.latitude}
           onChange={(e) => setField('latitude', e.target.value)}
         />
         <input
-          className={styles.fieldInput}
+          className="bg-[var(--surface-container-highest)] border border-transparent p-[0.75rem_1rem] rounded-md text-[var(--on-surface)] text-[0.875rem] transition-all duration-150 outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] placeholder:text-[var(--on-surface-variant)] placeholder:opacity-50"
           type="text"
           placeholder="Longitude (ex: -46.6333)"
           value={state.longitude}
@@ -236,7 +236,7 @@ function Location() {
         />
       </div>
       <input
-        className={`${styles.fieldInput} ${styles.locationFull}`}
+        className="bg-[var(--surface-container-highest)] border border-transparent p-[0.75rem_1rem] rounded-md text-[var(--on-surface)] text-[0.875rem] transition-all duration-150 outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] placeholder:text-[var(--on-surface-variant)] placeholder:opacity-50 w-full"
         type="text"
         placeholder="Descrição da localização (região, cidade, referência)"
         value={state.location}
@@ -253,8 +253,8 @@ function Severity() {
   const { state, setField } = useReportForm();
 
   return (
-    <div className={styles.field}>
-      <label className={styles.fieldLabel}>Nível de Ameaça</label>
+    <div className="flex flex-col gap-2">
+      <label className="font-['Inter',sans-serif] text-[0.875rem] font-medium text-[var(--on-surface)]">Nível de Ameaça</label>
       <ThreatGauge.Root level={state.severity} onChange={(v) => setField('severity', v)}>
         <ThreatGauge.Bar interactive />
         <ThreatGauge.Label />
@@ -270,16 +270,18 @@ function Severity() {
 function Toggle({ fieldName, label }) {
   const { state, setField } = useReportForm();
   return (
-    <div className={styles.toggle}>
+    <div className="flex items-center">
       <input
         type="checkbox"
         id={`toggle-${fieldName}`}
         checked={!!state[fieldName]}
         onChange={(e) => setField(fieldName, e.target.checked)}
-        className={styles.toggleInput}
+        className="hidden peer"
       />
-      <label htmlFor={`toggle-${fieldName}`} className={styles.toggleLabel}>
-        <span className={styles.toggleSwitch} />
+      <label htmlFor={`toggle-${fieldName}`} className="flex items-center gap-3 cursor-pointer text-[0.875rem] text-[var(--on-surface)] group">
+        <span className="relative w-10 h-6 bg-[var(--surface-container-highest)] rounded-full transition-colors duration-150 peer-checked:bg-[var(--primary-container)] group-has-[:checked]:bg-[var(--primary-container)]">
+          <span className={`absolute top-[2px] left-[2px] w-5 h-5 bg-[var(--on-surface-variant)] rounded-full transition-all duration-150 ${state[fieldName] ? 'translate-x-4 bg-[var(--surface)]' : ''}`} />
+        </span>
         {label}
       </label>
     </div>
@@ -294,11 +296,11 @@ function Submit({ label = 'Enviar Relatório' }) {
   return (
     <button
       type="submit"
-      className={styles.submit}
+      className="bg-gradient-to-br from-[var(--primary)] to-[var(--primary-container)] text-[var(--on-primary)] font-['Inter',sans-serif] font-semibold text-base p-4 rounded-md flex items-center justify-center gap-2 mt-4 transition-all duration-150 hover:not(:disabled):-translate-y-[2px] hover:not(:disabled):shadow-[0_4px_20px_rgba(255,87,34,0.4)] disabled:opacity-70 disabled:cursor-not-allowed"
       disabled={state.submitting}
     >
       {state.submitting ? (
-        <span className={styles.submitSpinner} />
+        <span className="w-5 h-5 border-2 border-[rgba(95,21,0,0.3)] border-t-[var(--on-primary)] rounded-full animate-[spin_1s_linear_infinite]" />
       ) : (
         <>🔥 {label}</>
       )}
@@ -311,13 +313,13 @@ function Submit({ label = 'Enviar Relatório' }) {
    ────────────────────────────────────────────── */
 function Success() {
   return (
-    <div className={styles.success}>
-      <div className={styles.successIcon}>✅</div>
-      <h2 className={styles.successTitle}>Incidente Registrado</h2>
-      <p className={styles.successText}>
-        O Sentinel Monitoring Station 01 recebeu seus dados e está despachando unidades de verificação.
+    <div className="flex flex-col items-center text-center p-[3rem_1.5rem] bg-[var(--surface-container-low)] border border-[rgba(90,65,56,0.2)] rounded-xl max-w-[500px] mx-auto w-full">
+      <div className="text-[4rem] mb-4"><Check size={64} className="p-2 bg-green-500 rounded-full" /></div>
+      <h2 className="text-[1.5rem] text-[var(--primary)] mb-2">Incidente Registrado</h2>
+      <p className="text-[var(--on-surface-variant)] mb-6">
+        A Estação de Monitoramento 01 recebeu seus dados e está despachando unidades de verificação.
       </p>
-      <p className={styles.successProtocol}>Protocol 09-Beta • Criptografia Ativada</p>
+      <p className="font-['Courier_New',Courier,monospace] text-[0.75rem] text-[var(--secondary)] bg-[rgba(136,217,130,0.1)] p-[0.25rem_0.75rem] rounded-sm">Agradecemos sua colaboração!</p>
     </div>
   );
 }
